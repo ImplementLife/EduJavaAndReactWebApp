@@ -1,7 +1,6 @@
 import { Button, TextField } from '@mui/material';
-import axios from 'axios';
 import React, { useState } from 'react';
-import QRCode from 'react-qr-code';
+import { login } from '../util/NetService';
 
 export default function () {
     const [username, setUsername] = useState('');
@@ -9,14 +8,11 @@ export default function () {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let identification_key = username;
-        axios.post('http://localhost:8080/login', { identification_key, password })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+        const loginData = {
+            id: username,
+            password: password,
+        }
+        login(loginData);
     };
 
     return (
@@ -27,7 +23,6 @@ export default function () {
                         label="Username"
                         variant="standard"
                         className='mt-4'
-                        value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         autoComplete="current-password"
                     />
@@ -38,7 +33,6 @@ export default function () {
                         variant="standard"
                         type="password"
                         className='mt-4'
-                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         autoComplete="current-password"
                     />
