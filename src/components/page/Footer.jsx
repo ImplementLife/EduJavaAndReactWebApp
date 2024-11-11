@@ -14,16 +14,16 @@ export default function () {
                 </ul>
                 <div className='d-flex justify-content-between mt-4 ms-4'>
                     <div className='d-flex justify-content-center align-items-center icons'>
-                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='svg/fasebook.svg'/></a>
-                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='svg/linkedin.svg'/></a>
-                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='svg/youtube.svg'/></a>
-                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='svg/instagram.svg'/></a>
+                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='/svg/fasebook.svg'/></a>
+                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='/svg/linkedin.svg'/></a>
+                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='/svg/youtube.svg'/></a>
+                        <a href='https://www.implementlife.com' className='footer-icon me-4'><img src='/svg/instagram.svg'/></a>
                     </div>
                     <div className='text-start me-4 dev-by'>
                         <div className='mt-2'>Developed by:</div>
                         <div className='mt-2'>
                             <a href='https://www.implementlife.com'>
-                                <img src='IL.png' alt='Icon' className='footer-icon' />
+                                <img src='/IL.png' alt='Icon' className='footer-icon' />
                                 Implement Life
                             </a>
                         </div>

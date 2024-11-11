@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import ThemeSwitch from '../elements/ThemeSwitch';
 import { siteName } from '../../res/prop';
 
 export default function() {
@@ -16,8 +15,6 @@ export default function() {
                             <li className="nav-item fs-5"><Link className='nav-link' to="/setup/user">Register</Link></li>
                         </ul>
                     </div>
-
-                    <ThemeSwitch />
                 </div>
             </nav>
         </header>

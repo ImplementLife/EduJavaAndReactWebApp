@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-
-export const BASE_URL = 'http://localhost:8080';
+import { apiServerUrl as BASE_URL } from '../res/prop';
 
 const ACCESS_TOKEN = 'ACCESS_TOKEN';
 const REFRESH_TOKEN = 'REFRESH_TOKEN';
@@ -42,14 +41,17 @@ export const logout = () => {
     axios
         .post(`${BASE_URL}/api/auth/logout`)
         .then(res => {
-            localStorage.removeItem(ACCESS_TOKEN);
-            localStorage.removeItem(REFRESH_TOKEN);
-            localStorage.removeItem(ROLES);
-            localStorage.removeItem(ACCESS_TOKEN_TIMEOUT);
             console.log('Complete logout');
         })
         .catch(err => {
             console.error('Fail logout');
+        })
+        .finally(() => {
+            localStorage.removeItem(ACCESS_TOKEN);
+            localStorage.removeItem(REFRESH_TOKEN);
+            localStorage.removeItem(ROLES);
+            localStorage.removeItem(ACCESS_TOKEN_TIMEOUT);
+            console.log('Local credentials are dropped')
         })
 }
 

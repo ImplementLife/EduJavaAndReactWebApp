@@ -14,8 +14,10 @@ const UserSetupPage = () => {
         lastName: '',
         birthDate: 0,
         address: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        profileImageUrl: ''
     });
+    const [imageFile, setImageFile] = useState(null);
 
     useEffect(() => {
         if (id) {
@@ -49,8 +51,41 @@ const UserSetupPage = () => {
         setData(prevData => ({ ...prevData, [name]: value }));
     };
 
+    const handleImageChange = (e) => {
+        setImageFile(e.target.files[0]);
+    };
+
+    const handleImageUpload = async () => {
+        if (!imageFile) return;
+
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        try {
+            const response = await fetch('http://localhost:8080/api/res/img', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Image upload failed');
+            }
+            const t = await response.text();
+            // setData(prevData => ({ ...prevData, profileImageUrl: t }));
+            data.profileImageUrl = t;
+            
+        } catch (error) {
+            console.error('Image upload error:', error);
+            alert('Error uploading image');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (imageFile) {
+            await handleImageUpload();
+        }
+
         const url = `http://localhost:8080/api/user`;
         const method = isNew ? 'POST' : 'PUT';
         const fetchParams = {
@@ -60,15 +95,16 @@ const UserSetupPage = () => {
             },
             body: JSON.stringify(data),
         };
+        console.log(data.profileImageUrl)
         try {
             const response = await fetch(url, fetchParams);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            alert('complete')
+            alert('complete');
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
-            alert('error')
+            alert('error');
         }
     };
 
@@ -128,6 +164,19 @@ const UserSetupPage = () => {
                     value={data.phoneNumber}
                     onChange={handleChange}
                 />
+            </div>
+            <div>
+                <label>Profile Image:</label>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                />
+                {data.profileImageUrl && (
+                    <div>
+                        <img src={data.profileImageUrl} alt="Profile" width="100" />
+                    </div>
+                )}
             </div>
             <button type="submit">{isNew ? 'Create' : 'Update'}</button>
         </form>

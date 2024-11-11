@@ -1,6 +1,6 @@
 import { Route, Routes }  from 'react-router-dom'
 import HomePage           from './pages/HomePage'
-import ListPage           from './pages/ListPage'
+import ListPage           from './pages/UserListPage'
 import NotFoundPage       from './pages/NotFoundPage'
 import UserDetailsPage    from './pages/UserDetailsPage'
 import UserSetupPage      from './pages/UserSetupPage'

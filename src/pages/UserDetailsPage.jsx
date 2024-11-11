@@ -3,7 +3,8 @@ import { useParams, Link} from 'react-router-dom';
 import { formatDate } from '../util/Util';
 import NotFoundPage from './NotFoundPage';
 import AccessDeniedPage from './AccessDeniedPage';
-import '../css/UserDetailsPage.css';
+import '../css/UserDetailsPage.scss';
+import {apiServerUrl} from '../res/prop.jsx';
 
 const UserDetailsPage = () => {
     const {id} = useParams();
@@ -16,7 +17,8 @@ const UserDetailsPage = () => {
         lastName: '',
         birthDate: 0,
         address: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        profileImageUrl: ''
     });
 
     useEffect(() => {
@@ -86,6 +88,9 @@ const UserDetailsPage = () => {
             <div className="user-details-item">
                 <span className="label">Phone Number:</span>
                 <span className="value">{data.phoneNumber}</span>
+            </div>
+            <div className="user-details-item">
+                <img className='profileImage' src={`${apiServerUrl}/api/res/img/${data.profileImageUrl}`}/>
             </div>
             <div className="user-details-item">
                 <Link to={`/setup/user/${id}`}>Edit</Link>

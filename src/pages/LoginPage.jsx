@@ -1,6 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { login } from '../util/NetService';
+import { login, logout } from '../util/NetService';
 
 export default function () {
     const [username, setUsername] = useState('');
@@ -13,6 +13,10 @@ export default function () {
             password: password,
         }
         login(loginData);
+    };
+    const handleLogout = (e) => {
+        e.preventDefault();
+        logout();
     };
 
     return (
@@ -38,11 +42,20 @@ export default function () {
                     />
                 </div>
 
-                <Button
-                    variant="contained"
-                    onClick={handleSubmit}
-                    className='mt-4 mb-4'
-                >Contained</Button>
+                <div>
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        className='mt-4 mb-2'
+                    >Continue</Button>
+                </div>
+                <div>
+                    <Button
+                        variant="contained"
+                        onClick={handleLogout}
+                        className='mt-2 mb-4'
+                    >Logout</Button>
+                </div>
             </div>
         </div>
     );
