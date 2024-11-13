@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { formatDate } from '../util/Util';
-import NotFoundPage from './NotFoundPage';
-import Head from '../components/common/Head';
-import '../css/UserSetupPage.scss';
+import React, { useEffect, useState }   from 'react';
+import { useParams }                    from 'react-router-dom';
+import { formatDate }                   from '../util/Util';
+import NotFoundPage                     from './NotFoundPage';
+import Head                             from '../components/common/Head';
+import { apiServerUrl }                 from '../res/prop';
+import                                       '../css/UserSetupPage.scss';
 
 const UserSetupPage = () => {
     const { id } = useParams();
@@ -20,12 +21,13 @@ const UserSetupPage = () => {
         profileImageUrl: ''
     });
     const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
 
     useEffect(() => {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/user?id=${id}`);
+                    const response = await fetch(`http://${apiServerUrl}/api/user?id=${id}`);
                     if (response.status === 404) {
                         setErrorNotFound(true);
                         throw new Error('Not found');
@@ -54,7 +56,12 @@ const UserSetupPage = () => {
     };
 
     const handleImageChange = (e) => {
-        setImageFile(e.target.files[0]);
+        const file = e.target.files[0];
+        setImageFile(file);
+
+        // Create a preview URL for the selected image
+        const previewUrl = file ? URL.createObjectURL(file) : null;
+        setImagePreview(previewUrl);
     };
 
     const handleImageUpload = async () => {
@@ -64,7 +71,7 @@ const UserSetupPage = () => {
         formData.append('image', imageFile);
 
         try {
-            const response = await fetch('http://localhost:8080/api/res/img', {
+            const response = await fetch(`http://${apiServerUrl}/api/res/img`, {
                 method: 'POST',
                 body: formData,
             });
@@ -88,7 +95,7 @@ const UserSetupPage = () => {
             await handleImageUpload();
         }
 
-        const url = `http://localhost:8080/api/user`;
+        const url = `http://${apiServerUrl}/api/user`;
         const method = isNew ? 'POST' : 'PUT';
         const fetchParams = {
             method,
@@ -179,7 +186,12 @@ const UserSetupPage = () => {
                         accept="image/*"
                         onChange={handleImageChange}
                     />
-                    {data.profileImageUrl && (
+                    {imagePreview && (
+                        <div className="profile-image-preview">
+                            <img src={imagePreview} alt="Profile Preview" />
+                        </div>
+                    )}
+                    {data.profileImageUrl && !imagePreview && (
                         <div className="profile-image-preview">
                             <img src={data.profileImageUrl} alt="Profile" />
                         </div>
