@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDate } from '../util/Util';
 import NotFoundPage from './NotFoundPage';
+import Head from '../components/common/Head';
+import '../css/UserSetupPage.scss';
 
 const UserSetupPage = () => {
     const { id } = useParams();
@@ -72,7 +74,7 @@ const UserSetupPage = () => {
             const t = await response.text();
             // setData(prevData => ({ ...prevData, profileImageUrl: t }));
             data.profileImageUrl = t;
-            
+
         } catch (error) {
             console.error('Image upload error:', error);
             alert('Error uploading image');
@@ -109,77 +111,83 @@ const UserSetupPage = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mt-4">
-            <div className="text-center">{isNew ? "New User" : "Edit User"}</div>
-            <div>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label>First Name:</label>
-                <input
-                    type="text"
-                    name="firstName"
-                    value={data.firstName}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label>Last Name:</label>
-                <input
-                    type="text"
-                    name="lastName"
-                    value={data.lastName}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label>Birth Date:</label>
-                <input
-                    type="date"
-                    name="birthDate"
-                    value={formatDate(data.birthDate, 'yyyy-MM-dd')}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label>Address:</label>
-                <input
-                    type="text"
-                    name="address"
-                    value={data.address}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label>Phone Number:</label>
-                <input
-                    type="tel"
-                    name="phoneNumber"
-                    value={data.phoneNumber}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label>Profile Image:</label>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                />
-                {data.profileImageUrl && (
-                    <div>
-                        <img src={data.profileImageUrl} alt="Profile" width="100" />
-                    </div>
-                )}
-            </div>
-            <button type="submit">{isNew ? 'Create' : 'Update'}</button>
-        </form>
+        <div className="user-form">
+            <Head
+                pageName={isNew ? 'Registration' : 'Update'}
+                dscr={isNew ? 'This is a registration page' : 'This is an update profile page'}
+            />
+            <form onSubmit={handleSubmit} className="mt-4">
+                <div className="text-center">{isNew ? "New User" : "Edit User"}</div>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label>First Name:</label>
+                    <input
+                        type="text"
+                        name="firstName"
+                        value={data.firstName}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input
+                        type="text"
+                        name="lastName"
+                        value={data.lastName}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label>Birth Date:</label>
+                    <input
+                        type="date"
+                        name="birthDate"
+                        value={formatDate(data.birthDate, 'yyyy-MM-dd')}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label>Address:</label>
+                    <input
+                        type="text"
+                        name="address"
+                        value={data.address}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label>Phone Number:</label>
+                    <input
+                        type="tel"
+                        name="phoneNumber"
+                        value={data.phoneNumber}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label>Profile Image:</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                    {data.profileImageUrl && (
+                        <div className="profile-image-preview">
+                            <img src={data.profileImageUrl} alt="Profile" />
+                        </div>
+                    )}
+                </div>
+                <button type="submit">{isNew ? 'Create' : 'Update'}</button>
+            </form>
+        </div>
     );
 };
 

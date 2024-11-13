@@ -37,7 +37,16 @@ const refresh = () => {
         })
 }
 
+const clearCred = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+    localStorage.removeItem(ROLES);
+    localStorage.removeItem(ACCESS_TOKEN_TIMEOUT);
+    console.log('Local credentials are dropped')
+}
+
 export const logout = () => {
+    clearCred();
     axios
         .post(`${BASE_URL}/api/auth/logout`)
         .then(res => {
@@ -46,13 +55,11 @@ export const logout = () => {
         .catch(err => {
             console.error('Fail logout');
         })
-        .finally(() => {
-            localStorage.removeItem(ACCESS_TOKEN);
-            localStorage.removeItem(REFRESH_TOKEN);
-            localStorage.removeItem(ROLES);
-            localStorage.removeItem(ACCESS_TOKEN_TIMEOUT);
-            console.log('Local credentials are dropped')
-        })
+}
+
+export const logoutWithPromise = () => {
+    clearCred();
+    return axios.post(`${BASE_URL}/api/auth/logout`);
 }
 
 const saveSec = (res) => {

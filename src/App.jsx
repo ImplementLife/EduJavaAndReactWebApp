@@ -5,20 +5,22 @@ import NotFoundPage       from './pages/NotFoundPage'
 import UserDetailsPage    from './pages/UserDetailsPage'
 import UserSetupPage      from './pages/UserSetupPage'
 import LoginPage          from './pages/LoginPage'
+import LogoutPage         from './pages/LogoutPage'
 import BillingPage        from './pages/BillingPage'
-import Header             from './components/page/Header'
-import Footer             from './components/page/Footer'
+import Footer             from './components/common/Footer'
+import Navbar             from './components/common/Navbar'
 import                         './css/App.css'
 
 export default function App() {
   return (
     <div className="app-container bgSecondary">
-      <Header />
+      <Navbar />
       <div className="content">
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
           <Route path="/billing" element={<BillingPage />} />
           <Route path="/users" element={<ListPage />} />
           <Route path="/user/:id" element={<UserDetailsPage />} />

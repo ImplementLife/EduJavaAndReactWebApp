@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Head from '../components/page/Head';
+import Head from '../components/common/Head';
 
 const HomePage = () => {
     return (

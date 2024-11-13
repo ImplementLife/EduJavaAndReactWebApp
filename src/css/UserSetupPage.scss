@@ -1,0 +1,77 @@
+.user-form {
+    max-width: 400px;
+    margin: 16px auto;
+    padding: 2rem;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    .text-center {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        color: #f1f1f1;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #ccc;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="file"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #444;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        color: #f1f1f1;
+        background-color: #444;
+
+        &::placeholder {
+            color: #bbb;
+        }
+
+        &:focus {
+            border-color: #F07E29;
+            outline: none;
+            box-shadow: 0 0 4px rgba(240, 126, 41, 0.3);
+        }
+    }
+
+    .profile-image-preview {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+
+        img {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        color: #fff;
+        background-color: #F07E29;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e07019;
+        }
+    }
+}

@@ -8,7 +8,7 @@ import '../css/ListPage.css';
 import AccessDeniedPage from './AccessDeniedPage';
 import NotFoundPage from './NotFoundPage';
 
-import Head from '../components/page/Head';
+import Head from '../components/common/Head';
 import { authAxios } from '../util/NetService';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -77,8 +77,8 @@ export default function () {
     return (
         <>
             <Head
-                pageName='List'
-                dscr='This is a list page'
+                pageName='Users'
+                dscr='This is a users list page'
             />
             <div className="container mt-4">
                 <h1>Users</h1>
