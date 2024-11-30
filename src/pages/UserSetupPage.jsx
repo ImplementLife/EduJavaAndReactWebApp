@@ -6,7 +6,7 @@ import Head                             from '../components/common/Head';
 import { apiServerUrl }                 from '../res/prop';
 import                                       '../css/UserSetupPage.scss';
 
-const UserSetupPage = () => {
+export default function() {
     const { id } = useParams();
     const [isNew, setIsNew] = useState(true);
     const [errorNotFound, setErrorNotFound] = useState(false);
@@ -27,7 +27,7 @@ const UserSetupPage = () => {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const response = await fetch(`http://${apiServerUrl}/api/user?id=${id}`);
+                    const response = await fetch(`${apiServerUrl}/api/user?id=${id}`);
                     if (response.status === 404) {
                         setErrorNotFound(true);
                         throw new Error('Not found');
@@ -71,7 +71,7 @@ const UserSetupPage = () => {
         formData.append('image', imageFile);
 
         try {
-            const response = await fetch(`http://${apiServerUrl}/api/res/img`, {
+            const response = await fetch(`${apiServerUrl}/api/res/img`, {
                 method: 'POST',
                 body: formData,
             });
@@ -95,7 +95,7 @@ const UserSetupPage = () => {
             await handleImageUpload();
         }
 
-        const url = `http://${apiServerUrl}/api/user`;
+        const url = `${apiServerUrl}/api/user`;
         const method = isNew ? 'POST' : 'PUT';
         const fetchParams = {
             method,
@@ -202,5 +202,3 @@ const UserSetupPage = () => {
         </div>
     );
 };
-
-export default UserSetupPage;

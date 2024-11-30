@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { apiServerUrl as BASE_URL } from '../res/prop';
+import { apiServerUrl } from '../res/prop';
 
 const ACCESS_TOKEN = 'ACCESS_TOKEN';
 const REFRESH_TOKEN = 'REFRESH_TOKEN';
@@ -13,7 +13,7 @@ export const login = (loginData) => {
     const pass = loginData.password;
 
     axios
-        .post(`${BASE_URL}/api/auth/login`, { id, pass })
+        .post(`${apiServerUrl}/api/auth/login`, { id, pass })
         .then(response => {
             saveSec(response);
             console.log();
@@ -29,7 +29,7 @@ const refresh = () => {
         refreshToken: localStorage.getItem(REFRESH_TOKEN),
     }
     axios
-        .post(`${BASE_URL}/api/auth/refresh`, sec)
+        .post(`${apiServerUrl}/api/auth/refresh`, sec)
         .then(response => {
             saveSec(response);
         }).catch(err => {
@@ -48,7 +48,7 @@ const clearCred = () => {
 export const logout = () => {
     clearCred();
     axios
-        .post(`${BASE_URL}/api/auth/logout`)
+        .post(`${apiServerUrl}/api/auth/logout`)
         .then(res => {
             console.log('Complete logout');
         })
@@ -59,7 +59,7 @@ export const logout = () => {
 
 export const logoutWithPromise = () => {
     clearCred();
-    return axios.post(`${BASE_URL}/api/auth/logout`);
+    return axios.post(`${apiServerUrl}/api/auth/logout`);
 }
 
 const saveSec = (res) => {

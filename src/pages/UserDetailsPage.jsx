@@ -6,7 +6,7 @@ import AccessDeniedPage from './AccessDeniedPage';
 import '../css/UserDetailsPage.scss';
 import {apiServerUrl} from '../res/prop.jsx';
 
-const UserDetailsPage = () => {
+export default function() {
     const {id} = useParams();
     const [errorNotFound, setErrorNotFound] = useState(false);
     const [accessDenied, setAccessDenied] = useState(false);
@@ -24,7 +24,7 @@ const UserDetailsPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             return new Promise((resolve, reject) => {
-                fetch(`http://localhost:8080/api/user?id=${id}`)
+                fetch(`${apiServerUrl}/api/user?id=${id}`)
                 .then(response => {
                     if (response.status === 404) {
                         setErrorNotFound(true);
@@ -98,4 +98,3 @@ const UserDetailsPage = () => {
         </div>
     )
 }
-export default UserDetailsPage;

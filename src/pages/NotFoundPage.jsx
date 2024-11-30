@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const NotFoundPage = () => {
+export default function() {
     return (
         <div className="container h-100 mt-4">
             <p className='fs-2 fw-bold'>404</p>
@@ -8,4 +8,3 @@ const NotFoundPage = () => {
         </div>
     )
 }
-export default NotFoundPage;

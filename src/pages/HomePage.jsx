@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Head from '../components/common/Head';
 
-const HomePage = () => {
+export default function() {
     return (
         <div className="container h-100 mt-4">
             <Head 
@@ -13,5 +13,3 @@ const HomePage = () => {
         </div>
     )
 }
-
-export default HomePage;

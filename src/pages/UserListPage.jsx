@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/ListPage.css';
 
+import {apiServerUrl} from '../res/prop.jsx';
+
 import AccessDeniedPage from './AccessDeniedPage';
 import NotFoundPage from './NotFoundPage';
 
@@ -42,7 +44,7 @@ export default function () {
     const [pageSize, setPageSize] = useState(10);
 
     useEffect(() => {
-        authAxios.get(`http://localhost:8080/api/users?page=${currentPage - 1}&size=${pageSize}&ascDir=${sortDir}`)
+        authAxios.get(`${apiServerUrl}/api/users?page=${currentPage - 1}&size=${pageSize}&ascDir=${sortDir}`)
             .then(response => {
                 if (response.status === 404) {
                     setErrorNotFound(true);

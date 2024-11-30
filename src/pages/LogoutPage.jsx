@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { logoutWithPromise } from '../util/NetService';
 import Head from '../components/common/Head';
 
-export default function () {
+export default function() {
     const [isHaveAuth, setIsHaveAuth] = useState(true);
 
     useEffect(() => {
