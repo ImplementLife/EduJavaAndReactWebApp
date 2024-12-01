@@ -6,6 +6,8 @@ import AccessDeniedPage from './AccessDeniedPage';
 import '../css/UserDetailsPage.scss';
 import {apiServerUrl} from '../res/prop.jsx';
 
+import useForbiden from '../components/hooks/useForbiden.jsx';
+
 export default function() {
     const {id} = useParams();
     const [errorNotFound, setErrorNotFound] = useState(false);
@@ -21,6 +23,8 @@ export default function() {
         profileImageUrl: ''
     });
 
+    const [setIsAccessDenied, getBody] = useForbiden();
+
     useEffect(() => {
         const fetchData = async () => {
             return new Promise((resolve, reject) => {
@@ -31,7 +35,7 @@ export default function() {
                         reject('Not found');
                     }
                     if (response.status === 403) {
-                        setAccessDenied(true);
+                        setIsAccessDenied(true);
                         reject('Access denied');
                     }
                     return response.json();
@@ -58,7 +62,7 @@ export default function() {
         return <AccessDeniedPage />
     }
 
-    return (
+    return getBody(
         <div className="user-details-card">
             <h1>User Details</h1>
             <div className="user-details-item">

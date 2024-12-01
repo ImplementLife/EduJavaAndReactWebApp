@@ -8,19 +8,16 @@ const ACCESS_TOKEN_TIMEOUT = 'ACCESS_TOKEN_TIMEOUT';
 const REFRESH_TOKEN_TIMEOUT = 'REFRESH_TOKEN_TIMEOUT';
 const ROLES = 'ROLES';
 
-export const login = (loginData) => {
-    const id = loginData.id;
-    const pass = loginData.password;
+//Local auth methods
+const saveSec = (res) => {
+    const accessToken = res.data.accessToken;
+    const refreshToken = res.data.refreshToken;
+    localStorage.setItem(ACCESS_TOKEN, accessToken);
+    localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
-    axios
-        .post(`${apiServerUrl}/api/auth/login`, { id, pass })
-        .then(response => {
-            saveSec(response);
-            console.log();
-        })
-        .catch(err => {
-            console.error('There was an error!', err);
-        });
+    const decodedAccessToken = jwtDecode(accessToken);
+    localStorage.setItem(ROLES, decodedAccessToken.roles);
+    localStorage.setItem(ACCESS_TOKEN_TIMEOUT, decodedAccessToken.exp);
 }
 
 const refresh = () => {
@@ -37,7 +34,7 @@ const refresh = () => {
         })
 }
 
-const clearCred = () => {
+const clearCreds = () => {
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(REFRESH_TOKEN);
     localStorage.removeItem(ROLES);
@@ -45,47 +42,58 @@ const clearCred = () => {
     console.log('Local credentials are dropped')
 }
 
-export const logout = () => {
-    clearCred();
-    axios
-        .post(`${apiServerUrl}/api/auth/logout`)
-        .then(res => {
-            console.log('Complete logout');
-        })
-        .catch(err => {
-            console.error('Fail logout');
-        })
-}
-
-export const logoutWithPromise = () => {
-    clearCred();
-    return axios.post(`${apiServerUrl}/api/auth/logout`);
-}
-
-const saveSec = (res) => {
-    const accessToken = res.data.accessToken;
-    const refreshToken = res.data.refreshToken;
-    localStorage.setItem(ACCESS_TOKEN, accessToken);
-    localStorage.setItem(REFRESH_TOKEN, refreshToken);
-
-    const decodedAccessToken = jwtDecode(accessToken);
-    localStorage.setItem(ROLES, decodedAccessToken.roles);
-    localStorage.setItem(ACCESS_TOKEN_TIMEOUT, decodedAccessToken.exp);
-}
-
-
-export const hasAuth = () => {
+const getCreds = () => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-    if (accessToken != null && refreshToken != null) {
-        return true;
-    }
-    return false;
+    return {accessToken, refreshToken};
+}
+
+//Export auth methods
+export const login = (loginData) => {
+    const id = loginData.id;
+    const pass = loginData.password;
+
+    axios
+        .post(`${apiServerUrl}/api/auth/login`, { id, pass })
+        .then(response => {
+            saveSec(response);
+            console.log();
+        })
+        .catch(err => {
+            console.error('There was an error!', err);
+        });
+}
+
+export const logout = () => {
+    clearCreds();
+    return axios.post(`${apiServerUrl}/api/auth/logout`, getCreds());
 }
 
 export const hasRoleAdmin = () => {
     const roles = localStorage.getItem(ROLES);
     return roles.includes('A');
+}
+
+export const isServerAvailable = () => {
+    return axios.get(`${apiServerUrl}/api/isAvailable`);
+}
+
+export const checkAuth = async () => {
+    const creds = getCreds();
+    if (creds.accessToken != null && creds.refreshToken != null) {
+        try {
+            const response = await axios.post(`${apiServerUrl}/api/auth/validate`, creds);
+            return true;
+        } catch(error) {
+            return false;
+        }
+    }
+    return false;
+}
+
+//Service methods
+export const getUsers = (currentPage, pageSize, sortDir) => {
+    return authAxios.get(`${apiServerUrl}/api/users?page=${currentPage}&size=${pageSize}&ascDir=${sortDir}`);
 }
 
 // Create an instance of Axios
@@ -97,3 +105,4 @@ authAxios.interceptors.request.use(config => {
 }, error => {
     return Promise.reject(error);
 });
+// --

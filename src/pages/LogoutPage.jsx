@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { logoutWithPromise } from '../util/NetService';
+import { logout } from '../util/NetService';
 import Head from '../components/common/Head';
 
 export default function() {
     const [isHaveAuth, setIsHaveAuth] = useState(true);
 
     useEffect(() => {
-        logoutWithPromise()
+        logout()
             .then(res => {
                 console.log('Complete logout');
                 setIsHaveAuth(false);

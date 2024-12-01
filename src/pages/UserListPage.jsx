@@ -5,13 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/ListPage.css';
 
-import {apiServerUrl} from '../res/prop.jsx';
-
-import AccessDeniedPage from './AccessDeniedPage';
 import NotFoundPage from './NotFoundPage';
 
 import Head from '../components/common/Head';
-import { authAxios } from '../util/NetService';
+import { getUsers } from '../util/NetService';
+
+import useForbiden from '../components/hooks/useForbiden.jsx';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,37 +35,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function () {
     const nav = useNavigate();
 
+    const [isAccessDenied, setIsAccessDenied, getBody] = useForbiden();
     const [errorNotFound, setErrorNotFound] = useState(false);
-    const [accessDenied, setAccessDenied] = useState(false);
     const [data, setData] = useState({ content: [], totalPages: 0, pageNum: 0 });
     const [currentPage, setCurrentPage] = useState(1);
     const [sortDir, setSortDir] = useState(true);
     const [pageSize, setPageSize] = useState(10);
 
+
     useEffect(() => {
-        authAxios.get(`${apiServerUrl}/api/users?page=${currentPage - 1}&size=${pageSize}&ascDir=${sortDir}`)
+        getUsers(currentPage - 1, pageSize, sortDir)
             .then(response => {
                 if (response.status === 404) {
                     setErrorNotFound(true);
                     reject('Not found');
-                }
-                if (response.status === 403) {
-                    setAccessDenied(true);
-                    reject('Access denied');
                 }
                 const result = response.data;
                 setData(result);
             })
             .catch(error => {
                 console.log(error);
+                if (error.response.status === 403) {
+                    console.log('Access denied');
+                    setIsAccessDenied(true);
+                }
             });
     }, [currentPage, sortDir, pageSize]);
 
     if (errorNotFound) {
         return <NotFoundPage />
-    }
-    if (accessDenied) {
-        return <AccessDeniedPage />
     }
 
     const handlePageChange = (event, page) => {
@@ -76,7 +73,7 @@ export default function () {
         nav(`/user/${id}`);
     };
 
-    return (
+    return getBody(
         <>
             <Head
                 pageName='Users'
