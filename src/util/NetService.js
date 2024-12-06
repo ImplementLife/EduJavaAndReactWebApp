@@ -96,6 +96,11 @@ export const getUsers = (currentPage, pageSize, sortDir) => {
     return authAxios.get(`${apiServerUrl}/api/users?page=${currentPage}&size=${pageSize}&ascDir=${sortDir}`);
 }
 
+export const getUserDetails = (id) => {
+    const response_promise = authAxios.get(`${apiServerUrl}/api/user?id=${id}`);
+    return response_promise;
+}
+
 // Create an instance of Axios
 export const authAxios = axios.create();
 authAxios.interceptors.request.use(config => {

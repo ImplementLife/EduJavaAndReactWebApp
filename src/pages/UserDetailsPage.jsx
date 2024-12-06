@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link} from 'react-router-dom';
-import { formatDate } from '../util/Util';
-import NotFoundPage from './NotFoundPage';
-import AccessDeniedPage from './AccessDeniedPage';
+import { Link, useParams } from 'react-router-dom';
 import '../css/UserDetailsPage.scss';
-import {apiServerUrl} from '../res/prop.jsx';
+import { apiServerUrl } from '../res/prop.jsx';
+import { formatDate } from '../util/Util';
 
-import useForbiden from '../components/hooks/useForbiden.jsx';
+import useAuth from '../components/hooks/useAuth.jsx';
+import { getUserDetails } from '../util/NetService.js';
 
-export default function() {
-    const {id} = useParams();
-    const [errorNotFound, setErrorNotFound] = useState(false);
-    const [accessDenied, setAccessDenied] = useState(false);
-    const [data, setData] = useState({ 
+export default function () {
+    const { id } = useParams();
+    const [data, setData] = useState({
         id: '',
         email: '',
         firstName: '',
@@ -23,46 +20,38 @@ export default function() {
         profileImageUrl: ''
     });
 
-    const [setIsAccessDenied, getBody] = useForbiden();
+    const [setIsNotFound, setIsAccessDenied, getAuthBody] = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
             return new Promise((resolve, reject) => {
-                fetch(`${apiServerUrl}/api/user?id=${id}`)
-                .then(response => {
-                    if (response.status === 404) {
-                        setErrorNotFound(true);
-                        reject('Not found');
-                    }
-                    if (response.status === 403) {
-                        setIsAccessDenied(true);
-                        reject('Access denied');
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    console.log(result);
-                    setData(result);
-                    resolve();
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+                getUserDetails(id)
+                    .then(response => {
+                        if (response.status === 404) {
+                            setIsNotFound(true);
+                            reject('Not found');
+                        }
+                        if (response.status === 403) {
+                            setIsAccessDenied(true);
+                            reject('Access denied');
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        console.log(result);
+                        setData(result);
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             });
         };
-        
+
         fetchData();
     }, [id]);
 
-    if (errorNotFound) {
-        return <NotFoundPage />
-    }
-    if (accessDenied) {
-        return <AccessDeniedPage />
-    }
-
-    return getBody(
+    return getAuthBody(
         <div className="user-details-card">
             <h1>User Details</h1>
             <div className="user-details-item">
@@ -83,7 +72,7 @@ export default function() {
             </div>
             <div className="user-details-item">
                 <span className="label">Birth Date:</span>
-                <span className="value">{ formatDate(data.birthDate, 'dd.MM.yyyy') }</span>
+                <span className="value">{formatDate(data.birthDate, 'dd.MM.yyyy')}</span>
             </div>
             <div className="user-details-item">
                 <span className="label">Address:</span>
@@ -94,7 +83,7 @@ export default function() {
                 <span className="value">{data.phoneNumber}</span>
             </div>
             <div className="user-details-item">
-                <img className='profileImage' src={`${apiServerUrl}/api/res/img/${data.profileImageUrl}`}/>
+                <img className='profileImage' src={`${apiServerUrl}/api/res/img/${data.profileImageUrl}`} />
             </div>
             <div className="user-details-item">
                 <Link to={`/setup/user/${id}`}>Edit</Link>
