@@ -1,0 +1,19 @@
+{
+    "key_header_home": "Home",
+    "key_header_users": "Users",
+    "key_header_login": "Login",
+    "key_header_logout": "Logout",
+    "key_header_register": "Register",
+    "key_header_language": "Language",
+
+    "key_page_main_head_name": "Home",
+    "key_page_main_head_dscr": "This is a home page",
+    "key_page_main_title": "This is HomePage.",
+
+    "key_footer_about": "About",
+    "key_footer_faq": "FAQ",
+    "key_footer_support": "Support",
+    "key_footer_dev_by": "Developed by:",
+
+    "":""
+}

@@ -1,0 +1,19 @@
+{
+    "key_header_home": "Домашня",
+    "key_header_users": "Користувачі",
+    "key_header_login": "Вхід",
+    "key_header_logout": "Вихід",
+    "key_header_register": "Реєстрація",
+    "key_header_language": "Мова",
+
+    "key_page_main_head_name": "Домашня",
+    "key_page_main_head_dscr": "Домашня сторінка",
+    "key_page_main_title": "Це HomePage.",
+
+    "key_footer_about": "Про нас",
+    "key_footer_faq": "Поширені питання",
+    "key_footer_support": "Підтримка",
+    "key_footer_dev_by": "Розроблено:",
+
+    "":""
+}

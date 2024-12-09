@@ -8,7 +8,7 @@ import LoginPage          from './pages/LoginPage'
 import LogoutPage         from './pages/LogoutPage'
 import BillingPage        from './pages/BillingPage'
 import Footer             from './components/common/Footer'
-import Navbar             from './components/common/Navbar'
+import Navbar             from './components/common/Navbar/Navbar'
 import                         './css/App.css'
 
 export default function App() {
