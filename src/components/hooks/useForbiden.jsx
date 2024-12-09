@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AccessDeniedPage from '../../pages/AccessDeniedPage';
+import AccessDeniedPage from '@/pages/AccessDeniedPage/AccessDeniedPage';
 
 export default function() {
     const [isAccessDenied, setIsAccessDenied] = useState(false);

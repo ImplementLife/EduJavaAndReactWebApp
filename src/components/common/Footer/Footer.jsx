@@ -1,7 +1,7 @@
-import { foundDate } from '../../res/prop';
-import '../../css/Footer.scss'
+import { foundDate } from '../../../res/prop';
 import { useTranslation } from 'react-i18next';
-import { locateKeys as lk } from '../../res/locate_keys';
+import { locateKeys as lk } from '../../../res/locate_keys';
+import './styles.scss';
 
 export default function () {
     const { t } = useTranslation();

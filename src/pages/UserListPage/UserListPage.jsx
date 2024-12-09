@@ -1,16 +1,14 @@
+import React, { useEffect, useState } from 'react';
 import { Button, Pagination, Paper, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../css/ListPage.css';
 
-import NotFoundPage from './NotFoundPage';
-
-import Head from '../components/common/Head';
-import { getUsers } from '../util/NetService';
-
-import useForbiden from '../components/hooks/useForbiden.jsx';
+import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
+import Head from '@/components/common/Head.jsx';
+import useForbiden from '@/components/hooks/useForbiden.jsx';
+import { getUsers } from '@/util/NetService.js';
+import './styles.css';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

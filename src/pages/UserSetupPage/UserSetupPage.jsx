@@ -1,10 +1,10 @@
 import React, { useEffect, useState }   from 'react';
 import { useParams }                    from 'react-router-dom';
-import { formatDate }                   from '../util/Util';
-import NotFoundPage                     from './NotFoundPage';
-import Head                             from '../components/common/Head';
-import { apiServerUrl }                 from '../res/prop';
-import                                       '../css/UserSetupPage.scss';
+import { formatDate }                   from '@/util/Util';
+import NotFoundPage                     from '@/pages/NotFoundPage/NotFoundPage';
+import Head                             from '@/components/common/Head';
+import { apiServerUrl }                 from '@/res/prop';
+import                                       './styles.scss';
 
 export default function() {
     const { id } = useParams();

@@ -1,7 +1,7 @@
-import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { login, logout } from '../util/NetService';
-import Head from '../components/common/Head';
+import { Button, TextField } from '@mui/material';
+import { login, logout } from '@/util/NetService';
+import Head from '@/components/common/Head';
 
 export default function () {
     const [username, setUsername] = useState('');

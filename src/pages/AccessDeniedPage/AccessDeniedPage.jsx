@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { checkAuth } from '../util/NetService';
+import { Link } from 'react-router-dom';
+import { checkAuth } from '@/util/NetService';
 
 export default function () {
     const [hasAuth, setHasAuth] = useState(false);

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Head from '../components/common/Head';
+import Head from '@/components/common/Head';
 import { useTranslation } from 'react-i18next';
-import { locateKeys as lk } from '../res/locate_keys';
+import { locateKeys as lk } from '@/res/locate_keys';
 
 export default function() {
     const { t } = useTranslation();

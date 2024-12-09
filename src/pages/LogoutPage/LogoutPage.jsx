@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { logout } from '../util/NetService';
-import Head from '../components/common/Head';
+import { logout } from '@/util/NetService';
+import Head from '@/components/common/Head';
 
 export default function() {
     const [isHaveAuth, setIsHaveAuth] = useState(true);

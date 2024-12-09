@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NotFoundPage from '../../pages/NotFoundPage';
+import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 
 export default function() {
     const [isNotFound, setIsNotFound] = useState(false);

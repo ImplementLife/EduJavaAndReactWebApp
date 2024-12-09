@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import '../css/UserDetailsPage.scss';
-import { apiServerUrl } from '../res/prop.jsx';
-import { formatDate } from '../util/Util';
-
-import useAuth from '../components/hooks/useAuth.jsx';
-import { getUserDetails } from '../util/NetService.js';
+import { apiServerUrl } from '@/res/prop.jsx';
+import { formatDate } from '@/util/Util.js';
+import useAuth from '@/components/hooks/useAuth.jsx';
+import { getUserDetails } from '@/util/NetService.js';
+import './styles.scss';
 
 export default function () {
     const { id } = useParams();
