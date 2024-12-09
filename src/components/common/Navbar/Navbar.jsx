@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { siteName } from '../../../res/prop';
-import LocateChooser from './children/LocateChooser/LocateChooser';
 import { useTranslation } from 'react-i18next';
-import { locateKeys as lk } from '../../../res/locate_keys';
+import { locateKeys as lk } from '@/res/locate_keys';
+import { siteName } from '@/res/prop';
+import useClickEvent from '@/components/hooks/useClickEvent';
+import LocateChooser from './children/LocateChooser/LocateChooser';
 import './styles.scss';
 
 export default function () {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
-
+    const [navRef] = useClickEvent(() => setIsOpen(false));
 
     return (
-        <nav className="nav">
+        <nav className="nav" ref={navRef}>
             <div className="logo">{siteName}</div>
             <button className="menu-button" onClick={() => setIsOpen(!isOpen)}>☰</button>
             <div className={`nav-links ${isOpen ? 'open' : ''}`}>
