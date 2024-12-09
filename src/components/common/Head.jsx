@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { siteName } from "../../res/prop";
+import { siteName } from "@/res/prop";
 
 export default function ({ pageName, dscr }) {
     return (
