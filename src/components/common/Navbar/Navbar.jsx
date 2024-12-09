@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { locateKeys as lk } from '@/res/locate_keys';
 import { siteName } from '@/res/prop';
-import useClickEvent from '@/components/hooks/useClickEvent';
+import useClickOutside from '@/components/hooks/useClickOutside';
 import LocateChooser from './children/LocateChooser/LocateChooser';
 import './styles.scss';
 
 export default function () {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
-    const [navRef] = useClickEvent(() => setIsOpen(false));
+    const [navRef] = useClickOutside(() => setIsOpen(false));
 
     return (
         <nav className="nav" ref={navRef}>
